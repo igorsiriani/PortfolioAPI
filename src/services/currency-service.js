@@ -1,12 +1,14 @@
 var fetch = require('node-fetch');
 
-exports.currency = async(symbols) => {
+exports.currency = async(item) => {
     let currencyArray = [];
+    let totalInvest = 0;
 
-    for (const symbol of symbols) {
+    for (const symbol of item.symbols) {
         const res = await fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + symbol + '&apikey=' + process.env.ALPHA_TOKEN_A).then(res => res.json());
-        currencyArray.push({ price: res["Global Quote"]["05. price"], change: res["Global Quote"]["09. change"] });
+        totalInvest += (parseFloat(res["Global Quote"]["05. price"]) * parseFloat(item.quantity));
+        currencyArray.push({ price: (parseFloat(res["Global Quote"]["05. price"]) * parseFloat(item.quantity)), change: res["Global Quote"]["09. change"] });
     }
 
-    return currencyArray;
+    return [currencyArray, totalInvest];
 }

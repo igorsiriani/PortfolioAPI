@@ -50,14 +50,16 @@ exports.getAll = async(req, res) => {
         let arrayData = [];
 
         for (const item of data) {
-            let currArray = await currency.currency(item.symbols);
-            currArray = JSON.stringify(currArray);
+            let currArray = await currency.currency(item);
+            let totalInvest = currArray[1];
+            
+            currArray = JSON.stringify(currArray[0]);
 
             let itemString = JSON.stringify(item);
             let index = itemString.indexOf(",\"_id\"");
 
             var tempArr = itemString.split('');
-            tempArr.splice(index, 0, ",\"currency\":" + currArray);
+            tempArr.splice(index, 0, ",\"currency\":" + currArray + ",\"totalInvest\":" + totalInvest);
 
             let newItem = JSON.parse(tempArr.join(''));
 
