@@ -7,7 +7,7 @@ exports.post = async (req, res) => {
         let arrayData = [];
         let newPortfolio = {
             name: req.body.name,
-            creationDate: currentdate.getDate() + "/"
+            creationDate: ("0" + (currentdate.getDate())).slice(-2) + "/"
                             + ("0" + (currentdate.getMonth()+1)).slice(-2) + "/" 
                             + currentdate.getFullYear() + " - "  
                             + ("0" + (currentdate.getHours())).slice(-2) + ":"  
