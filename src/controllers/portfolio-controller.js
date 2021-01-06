@@ -17,22 +17,20 @@ exports.post = async (req, res) => {
         }
         await repository.post(newPortfolio); 
 
-        for (const item of data) {
-            let currArray = await currency.currency(item);
-            let totalInvest = currArray[1];
-            
-            currArray = JSON.stringify(currArray[0]);
+        let currArray = await currency.currency(newPortfolio);
+        let totalInvest = currArray[1];
+        
+        currArray = JSON.stringify(currArray[0]);
 
-            let itemString = JSON.stringify(item);
-            let index = itemString.indexOf(",\"_id\"");
+        let itemString = JSON.stringify(newPortfolio);
+        let index = itemString.indexOf(",\"_id\"");
 
-            var tempArr = itemString.split('');
-            tempArr.splice(index, 0, ",\"currency\":" + currArray + ",\"totalInvest\":" + totalInvest);
+        var tempArr = itemString.split('');
+        tempArr.splice(index, 0, ",\"currency\":" + currArray + ",\"totalInvest\":" + totalInvest);
 
-            let newItem = JSON.parse(tempArr.join(''));
+        let newItem = JSON.parse(tempArr.join(''));
 
-            arrayData.push(newItem);
-        }
+        arrayData.push(newItem);
 
         res.status(201).send({
             message: 'Portfolio added successfully',
