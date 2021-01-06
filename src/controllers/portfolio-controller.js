@@ -8,10 +8,10 @@ exports.post = async (req, res) => {
         let newPortfolio = {
             name: req.body.name,
             creationDate: currentdate.getDate() + "/"
-                            + (currentdate.getMonth()+1)  + "/" 
+                            + ("0" + (currentdate.getMonth()+1)).slice(-2) + "/" 
                             + currentdate.getFullYear() + " - "  
-                            + currentdate.getHours() + ":"  
-                            + currentdate.getMinutes(),
+                            + ("0" + (currentdate.getHours())).slice(-2) + ":"  
+                            + ("0" + (currentdate.getMinutes())).slice(-2),
             symbols: req.body.symbols,
             quantity: req.body.quantity
         }
